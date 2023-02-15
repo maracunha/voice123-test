@@ -1,6 +1,6 @@
 export interface IParams {
   keywords: string;
-  pages: string;
+  page: string;
 }
 
 export interface ITalentsAPIResponse {
