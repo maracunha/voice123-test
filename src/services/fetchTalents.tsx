@@ -1,16 +1,9 @@
 import { QueryFunction } from 'react-query';
-import { ITalentsAPIResponse } from '../interfaces';
+import { IParams, ITalentsAPIResponse } from '../interfaces';
 
-const fetchSearch: QueryFunction<
-  ITalentsAPIResponse,
-  [
-    'search',
-    {
-      keywords: string;
-      page: string;
-    },
-  ]
-> = async function ({ queryKey }) {
+const fetchSearch: QueryFunction<ITalentsAPIResponse, ['search', IParams]> = async function ({
+  queryKey,
+}) {
   const { keywords, page } = queryKey[1];
   const res = await fetch(
     `https://api.sandbox.voice123.com/providers/search/?service=voice_over&keywords=${keywords}&page=${page}`,
