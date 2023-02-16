@@ -5,7 +5,7 @@ import fetchTalents from "../services/fetchTalents";
 export default function useTalestsList(params: IParams) {
   const results = useQuery(["search", params], fetchTalents);
 
-  return [results?.data ?? [], results.status] as [
+  return [results?.data?.providers ?? [], results.status] as [
     string[],
     QueryStatus
   ];
