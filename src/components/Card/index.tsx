@@ -7,6 +7,7 @@ import {
   CardMedia,
   Grid,
   IconButton,
+  Link,
   List,
   ListItem,
   ListItemAvatar,
@@ -72,7 +73,13 @@ const Card = ({ talent }: TalentProp) => {
             <ListItemAvatar>
               <Avatar src={picture_small} alt={name} />
             </ListItemAvatar>
-            <ListItemText primary={name} />
+            <ListItemText
+              primary={
+                <Link href={`https://voice123.com/${username}`} underline="none" color="inherit">
+                  {name}
+                </Link>
+              }
+            />
           </ListItem>
         </List>
       </Paper>
