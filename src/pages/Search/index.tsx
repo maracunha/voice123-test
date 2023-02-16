@@ -6,7 +6,7 @@ import SearchItems from '../../components/SearchItems';
 
 const Search = () => {
   return (
-    <Box p={3}>
+    <Box p={3} maxWidth="80rem" m="auto">
       <SearchBar />
       <Routes>
         <Route path="/search" element={<SearchItems />} />
