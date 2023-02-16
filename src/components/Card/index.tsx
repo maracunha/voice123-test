@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { MutableRefObject, useRef, useState } from 'react';
 import {
   Avatar,
   Card as MuiCard,
@@ -25,19 +25,23 @@ interface TalentProp {
 
 const Card = ({ talent }: TalentProp) => {
   const [play, setPlay] = useState(false);
-  const audioRef = useRef(null);
+  const audioRef: MutableRefObject<HTMLAudioElement | null> = useRef(null);
 
   const { picture_small, name, username } = talent.user;
   const sample = talent.relevant_sample;
-
   const sampleName = sample.name.length > 25 ? sample.name.slice(0, 25) + '...' : sample.name;
-  // console.log(sampleName, sampleName.length);
 
   if (play && audioRef) {
-    audioRef.current?.play();
+    audioRef.current?.play() as void;
   } else {
     audioRef.current?.pause();
   }
+
+  audioRef.current?.addEventListener('ended', (event) => {
+    if (event.isTrusted) {
+      setPlay(false);
+    }
+  });
 
   const handleClick = () => {
     setPlay((prev) => !prev);
@@ -52,12 +56,6 @@ const Card = ({ talent }: TalentProp) => {
             secondaryAction={
               <MuiCard sx={{ width: 150 }}>
                 <CardActionArea>
-                  <CardMedia
-                    ref={audioRef}
-                    component="audio"
-                    src={sample?.file}
-                    alt={sample?.name}
-                  />
                   <CardContent sx={{ textAlign: 'center' }}>
                     <IconButton aria-label="play/pause" onClick={handleClick}>
                       {play ? <PauseIcon /> : <PlayArrowIcon />}
@@ -83,6 +81,7 @@ const Card = ({ talent }: TalentProp) => {
           </ListItem>
         </List>
       </Paper>
+      <audio ref={audioRef} src={sample?.file} />
     </Grid>
   );
 };
