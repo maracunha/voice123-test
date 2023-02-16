@@ -4,6 +4,10 @@ export interface IParams {
 }
 
 export interface ITalentsAPIResponse {
+  providers: Provider[]
+}
+
+export interface Provider {
   id: number
   user_id: number
   service_id: string
@@ -57,6 +61,7 @@ export interface User {
   ui_preferences: UiPreferences
   created_at: string
   updated_at: string
+  picture_small: string
 }
 
 export interface UiPreferences {

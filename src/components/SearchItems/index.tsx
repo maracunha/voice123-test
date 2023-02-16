@@ -24,8 +24,7 @@ const SearhItems = () => {
     setRequestParams((prev) => ({ ...prev, page: value }));
   };
 
-  const results = useTalentsList(requestParams);
-  const [talents] = results;
+  const [ talents ] = useTalentsList(requestParams)
 
   return (
     <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>

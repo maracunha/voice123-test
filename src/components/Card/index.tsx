@@ -16,9 +16,13 @@ import {
 } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
-import { ITalentsAPIResponse } from '../../interfaces';
+import { Provider } from '../../interfaces';
 
-const Card = ({ talent }:ITalentsAPIResponse ) => {
+interface TalentProp {
+  talent: Provider;
+}
+
+const Card = ({ talent }: TalentProp) => {
   const [play, setPlay] = useState(false);
   const audioRef = useRef(null);
 
@@ -27,8 +31,6 @@ const Card = ({ talent }:ITalentsAPIResponse ) => {
 
   const sampleName = sample.name.length > 25 ? sample.name.slice(0, 25) + '...' : sample.name;
   // console.log(sampleName, sampleName.length);
-
-  const description = `${name} | user: ${username}`;
 
   if (play && audioRef) {
     audioRef.current?.play();
