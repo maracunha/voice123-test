@@ -2,7 +2,6 @@ import { MutableRefObject, useRef, useState } from 'react';
 import {
   Avatar,
   Card as MuiCard,
-  CardActionArea,
   CardContent,
   CardMedia,
   Grid,
@@ -55,16 +54,15 @@ const Card = ({ talent }: TalentProp) => {
             sx={{ minHeight: 120 }}
             secondaryAction={
               <MuiCard sx={{ width: 150 }}>
-                <CardActionArea>
-                  <CardContent sx={{ textAlign: 'center' }}>
-                    <IconButton aria-label="play/pause" onClick={handleClick}>
-                      {play ? <PauseIcon /> : <PlayArrowIcon />}
-                    </IconButton>
-                    <Typography variant="body2" color="text.secondary">
-                      {sampleName}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
+                <CardContent sx={{ textAlign: 'center' }}>
+                  <CardMedia component="audio" ref={audioRef} src={sample?.file} />
+                  <IconButton aria-label="play/pause" onClick={handleClick}>
+                    {play ? <PauseIcon /> : <PlayArrowIcon />}
+                  </IconButton>
+                  <Typography variant="body2" color="text.secondary">
+                    {sampleName}
+                  </Typography>
+                </CardContent>
               </MuiCard>
             }
           >
@@ -81,15 +79,8 @@ const Card = ({ talent }: TalentProp) => {
           </ListItem>
         </List>
       </Paper>
-      <audio ref={audioRef} src={sample?.file} />
     </Grid>
   );
 };
 
 export default Card;
-// <Box maxWidth={100} bg="grey">
-//   <CardMedia ref={audioRef} component="audio" src={sample.file} alt={sample.name} />
-//   <IconButton aria-label="play/pause" onClick={handleClick}>
-//     {play ? <PauseIcon /> : <PlayArrowIcon />}
-//   </IconButton>
-// </Box>

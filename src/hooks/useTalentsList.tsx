@@ -1,4 +1,4 @@
-import { QueryStatus, useQuery } from 'react-query';
+import { QueryStatus, useQuery } from '@tanstack/react-query';
 import { IParams, Provider } from '../interfaces';
 import fetchTalents from '../services/fetchTalents';
 

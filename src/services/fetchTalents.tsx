@@ -1,4 +1,4 @@
-import { QueryFunction } from 'react-query';
+import { QueryFunction } from '@tanstack/react-query';
 import { IParams, ITalentsAPIResponse } from '../interfaces';
 
 const fetchSearch: QueryFunction<ITalentsAPIResponse, ['search', IParams]> = async function ({
@@ -12,7 +12,7 @@ const fetchSearch: QueryFunction<ITalentsAPIResponse, ['search', IParams]> = asy
   if (!res.ok) throw new Error(`Talent search not okay: ${keywords}, ${page}`);
 
   const totalPages = res.headers.get('x-list-total-pages');
-  console.log({ totalPages })
+  console.log({ totalPages });
 
   return res.json();
 };
