@@ -45,6 +45,7 @@ npm run dev
 
 - 9h : Try to find a better way to update the pages;
 - 10h: Creating the Readme
+- 12h: Add test
 
 ## Future improvements and recommendations
 
