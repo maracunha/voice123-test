@@ -18,13 +18,14 @@ const SearhItems = () => {
 
   const [searchParams] = useSearchParams();
   const keywords = searchParams.get('keywords') ?? '';
+  const pagesStorage = localStorage.getItem('pages')
 
   useEffect(() => {
-    if (localStorage.getItem('pages')) {
-      const pagesStorage = +JSON.parse(localStorage.getItem('pages') ?? '');
-      setPages(pagesStorage);
+    if (pagesStorage) {
+      const pgs = +JSON.parse(localStorage.getItem('pages') ?? '');
+      setPages(pgs);
     }
-  }, []);
+  }, [pagesStorage]);
 
   useEffect(() => {
     setRequestParams((prev) => ({ ...prev, keywords }));
