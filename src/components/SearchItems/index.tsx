@@ -29,7 +29,7 @@ const SearchItems = () => {
   }, [pagesStorage, pagesKey]);
 
   useEffect(() => {
-    setRequestParams((prev) => ({ ...prev, keywords }));
+    setRequestParams({ keywords, page: 1 });
   }, [keywords]);
 
   const handleChange = (_: React.ChangeEvent<unknown>, value: number) => {
