@@ -7,6 +7,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import useTalentsList from '../../hooks/useTalentsList';
 import Card from '../Card';
+import SkeletonCards from '../SkeletonCards';
 
 const SearhItems = () => {
   const [pages, setPages] = useState(0);
@@ -32,7 +33,11 @@ const SearhItems = () => {
     setRequestParams((prev) => ({ ...prev, page: value }));
   };
 
-  const [talents] = useTalentsList(requestParams);
+  const [talents, status] = useTalentsList(requestParams);
+
+  if (status === 'loading') {
+    return <SkeletonCards />
+    }
 
   return (
     <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
