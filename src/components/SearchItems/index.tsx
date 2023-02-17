@@ -19,11 +19,12 @@ const SearhItems = () => {
   const [searchParams] = useSearchParams();
   const keywords = searchParams.get('keywords') ?? '';
 
-  const pagesStorage = +JSON.parse(localStorage.getItem('pages') ?? '');
-
   useEffect(() => {
-    setPages(pagesStorage);
-  }, [pagesStorage]);
+    if (localStorage.getItem('pages')) {
+      const pagesStorage = +JSON.parse(localStorage.getItem('pages') ?? '');
+      setPages(pagesStorage);
+    }
+  }, []);
 
   useEffect(() => {
     setRequestParams((prev) => ({ ...prev, keywords }));
@@ -36,8 +37,8 @@ const SearhItems = () => {
   const [talents, status] = useTalentsList(requestParams);
 
   if (status === 'loading') {
-    return <SkeletonCards />
-    }
+    return <SkeletonCards />;
+  }
 
   return (
     <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
