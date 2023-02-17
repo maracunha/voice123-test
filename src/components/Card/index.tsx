@@ -71,7 +71,7 @@ const Card = ({ talent }: TalentProp) => {
             </ListItemAvatar>
             <ListItemText
               primary={
-                <Link href={`https://voice123.com/${username}`} underline="none" color="inherit">
+                <Link data-testid="linkProfile" href={`https://voice123.com/${username}`} underline="none" color="inherit">
                   {name}
                 </Link>
               }
