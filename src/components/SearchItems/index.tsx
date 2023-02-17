@@ -18,14 +18,15 @@ const SearchItems = () => {
 
   const [searchParams] = useSearchParams();
   const keywords = searchParams.get('keywords') ?? '';
-  const pagesStorage = localStorage.getItem('pages')
+  const pagesKey = requestParams.keywords === '' ? 'init' : requestParams.keywords;
+  const pagesStorage = localStorage.getItem(pagesKey);
 
   useEffect(() => {
     if (pagesStorage) {
-      const pgs = +JSON.parse(localStorage.getItem('pages') ?? '');
+      const pgs = +JSON.parse(localStorage.getItem(pagesKey) ?? '');
       setPages(pgs);
     }
-  }, [pagesStorage]);
+  }, [pagesStorage, pagesKey]);
 
   useEffect(() => {
     setRequestParams((prev) => ({ ...prev, keywords }));
@@ -36,6 +37,7 @@ const SearchItems = () => {
   };
 
   const [talents, status] = useTalentsList(requestParams);
+  const showPagination = pages > 0;
 
   if (status === 'loading') {
     return <SkeletonCards />;
@@ -49,7 +51,7 @@ const SearchItems = () => {
         ))}
       </Grid>
 
-      {pages && (
+      {showPagination && (
         <Stack spacing={2}>
           <Pagination
             size="large"

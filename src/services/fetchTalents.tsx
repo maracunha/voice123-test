@@ -12,7 +12,8 @@ const fetchSearch: QueryFunction<ITalentsAPIResponse, ['search', IParams]> = asy
   if (!res.ok) throw new Error(`Talent search not okay: ${keywords}, ${page}`);
 
   const totalPages = res.headers.get('x-list-total-pages');
-  localStorage.setItem('pages', JSON.stringify(totalPages));
+  const pagesKey = keywords === '' ? 'init' : keywords;
+  localStorage.setItem(pagesKey, JSON.stringify(totalPages));
 
   return res.json();
 };
