@@ -9,7 +9,7 @@ import useTalentsList from '../../hooks/useTalentsList';
 import Card from '../Card';
 import SkeletonCards from '../SkeletonCards';
 
-const SearhItems = () => {
+const SearchItems = () => {
   const [pages, setPages] = useState(0);
   const [requestParams, setRequestParams] = useState({
     keywords: '',
@@ -69,4 +69,4 @@ const SearhItems = () => {
   );
 };
 
-export default SearhItems;
+export default SearchItems;
