@@ -47,7 +47,7 @@ const SearchItems = () => {
     <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
       <Grid container spacing={1}>
         {talents.map((talent) => (
-          <Card key={talent.id} talent={talent} />
+          <Card key={talent.id} talent={talent} keywords={requestParams.keywords} />
         ))}
       </Grid>
 
