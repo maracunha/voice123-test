@@ -1,17 +1,12 @@
-import { useState } from 'react';
 import {
   Avatar,
-  Card as MuiCard,
-  CardContent,
   Grid,
-  IconButton,
   Link,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
   Paper,
-  Typography,
 } from '@mui/material';
 import { Provider } from '../../interfaces';
 import Hightlihgts from '../TextHeightlights/solution2';
@@ -23,15 +18,9 @@ interface TalentProp {
 }
 
 const Card = ({ talent, keywords }: TalentProp) => {
-  const [play, setPlay] = useState(false);
-
   const { picture_small, name, username } = talent.user;
   const sample = talent.relevant_sample;
   const sampleName = sample.name;
-
-  const handleClick = () => {
-    setPlay((prev) => !prev);
-  };
 
   return (
     <Grid item xs={12} sm={6}>
