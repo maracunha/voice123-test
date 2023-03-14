@@ -2,6 +2,8 @@ import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { Box, Card, CardContent, IconButton } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
+import Forward10Icon from '@mui/icons-material/Forward10';
+import Replay10Icon from '@mui/icons-material/Replay10';
 
 interface IProp {
   url: string;
@@ -35,8 +37,6 @@ const Player = ({ url }: IProp) => {
     setPlay((prev) => !prev);
   };
 
-  console.log({ widthPercentage, totalDuration });
-
   useEffect(() => {
     let id: number | null = null;
     if (audioElement && !id && play) {
@@ -45,9 +45,9 @@ const Player = ({ url }: IProp) => {
       }, 1000);
     }
 
-    if (widthPercentage === 100 && id) {
+    if (widthPercentage >= 99 && id) {
       clearInterval(id);
-      setWidthPercentage(0)
+      setWidthPercentage(0);
     }
 
     return () => {
@@ -64,6 +64,29 @@ const Player = ({ url }: IProp) => {
     }
   });
 
+  const SECONDS_TO_UPDATE = 10;
+  const { currentTime } = audioElement.current;
+  const widthRaise = (SECONDS_TO_UPDATE * 100) / totalDuration;
+
+  const handleClickRaise = () => {
+    audioElement.current.currentTime = currentTime + SECONDS_TO_UPDATE;
+
+    if (widthPercentage < 90) {
+      setWidthPercentage((x) => x + widthRaise);
+    }
+  };
+
+  const handleClickDecay = () => {
+    audioElement.current.currentTime = currentTime - SECONDS_TO_UPDATE;
+
+    if (widthPercentage < 10) {
+      setWidthPercentage(0);
+    } else {
+      setWidthPercentage((x) => x - widthRaise);
+    }
+  };
+
+
   return (
     <>
       <Card>
@@ -72,16 +95,25 @@ const Player = ({ url }: IProp) => {
             backgroundColor: 'lightblue',
             position: 'absolute',
             width: `${widthPercentage}%`,
-            height: '100%',
+            height: '40%',
             bottom: 0,
             left: 0,
             right: 0,
+            p: 0,
           }}
         />
-        <CardContent sx={{ textAlign: 'center' }}>
+        <CardContent sx={{ textAlign: 'center', p: 0 }}>
           <IconButton aria-label="play/pause" onClick={handleClick}>
             {play ? <PauseIcon /> : <PlayArrowIcon />}
           </IconButton>
+        </CardContent>
+        <CardContent sx={{ textAlign: 'center', p: '0 !important', }}>
+            <IconButton aria-label="decay 10s" disabled={widthPercentage < 1} onClick={handleClickDecay}>
+              <Replay10Icon fontSize="small" />
+            </IconButton>
+            <IconButton aria-label="raise 10s" disabled={widthPercentage < 1} onClick={handleClickRaise}>
+              <Forward10Icon fontSize="small" />
+            </IconButton>
         </CardContent>
       </Card>
     </>
