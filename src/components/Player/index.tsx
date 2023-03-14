@@ -1,5 +1,5 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
-import { Box, Card, CardContent, IconButton, Typography } from '@mui/material';
+import { Box, Card, CardContent, IconButton } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 
@@ -9,7 +9,7 @@ interface IProp {
 
 const Player = ({ url }: IProp) => {
   const [play, setPlay] = useState(false);
-  const [duration, setDuration] = useState(1);
+  const [widthPercentage, setWidthPercentage] = useState(0);
   const [totalDuration, setTotalDuration] = useState(0);
   const audioElement: MutableRefObject<HTMLAudioElement> = useRef(new Audio(url));
 
@@ -35,24 +35,28 @@ const Player = ({ url }: IProp) => {
     setPlay((prev) => !prev);
   };
 
+  console.log({ widthPercentage, totalDuration });
+
   useEffect(() => {
     let id: number | null = null;
     if (audioElement && !id && play) {
       id = window.setInterval(() => {
-        setDuration((n) => n + 1);
+        setWidthPercentage((n) => n + Math.ceil(100 / totalDuration));
       }, 1000);
+    }
+
+    if (widthPercentage === 100 && id) {
+      clearInterval(id);
+      setWidthPercentage(0)
     }
 
     return () => {
       if (id && play) {
         clearInterval(id);
         id = null;
-        if (totalDuration === duration && totalDuration > 0) {
-          setTotalDuration(0);
-        }
       }
     };
-  }, [play, duration, totalDuration]);
+  }, [play, widthPercentage, totalDuration]);
 
   audioElement.current.addEventListener('ended', (event) => {
     if (event.isTrusted) {
@@ -62,17 +66,18 @@ const Player = ({ url }: IProp) => {
 
   return (
     <>
-      <Box
-        sx={{
-          backgroundColor: 'lightblue',
-          width: `${duration}%`,
-          height: '100%',
-          bottom: 0,
-          left: 0,
-          right: 0,
-        }}
-      />
       <Card>
+        <Box
+          sx={{
+            backgroundColor: 'lightblue',
+            position: 'absolute',
+            width: `${widthPercentage}%`,
+            height: '100%',
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}
+        />
         <CardContent sx={{ textAlign: 'center' }}>
           <IconButton aria-label="play/pause" onClick={handleClick}>
             {play ? <PauseIcon /> : <PlayArrowIcon />}
