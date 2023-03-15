@@ -9,7 +9,7 @@ import {
   Paper,
 } from '@mui/material';
 import { Provider } from '../../interfaces';
-import Hightlihgts from '../TextHeightlights/solution2';
+import Hightlihgts from '../TextHeightlights/solution1';
 import Player from '../Player';
 
 interface TalentProp {
@@ -41,7 +41,7 @@ const Card = ({ talent, keywords }: TalentProp) => {
                   {name}
                 </Link>
               }
-              secondary={<Hightlihgts keywords={keywords} texts={sampleName} id={talent.id} />}
+              secondary={<Hightlihgts keywords={keywords} texts={sampleName} />}
             />
           </ListItem>
         </List>
